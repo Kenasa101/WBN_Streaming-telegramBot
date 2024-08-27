@@ -47,7 +47,7 @@
                     </svg>
 
                 </button>
-                <input type="number" id="shows-page" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded max-w-10"
+                <input type="number" id="shows-page" class="bg-gray-200 text-gray-700 font-bold py-2 px-2 rounded max-w-10"
                     value="1">
                 <p class="hint-text">of</p>
                 <p id="shows-total-pages" class="hint-text">1</p>
@@ -61,11 +61,47 @@
             </div>
 
             <!-- Copyright notice -->
-            <div class="flex justify-center items-center my-4">
+            <div class="flex justify-center items-center mt-16 mb-4">
                 <p class="text-sm hint-text">The rights of the shows and movies are owned by their respective owners. This webapp is for educational purposes only.</p>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Show episodes -->
+<!-- Banner up full with rounded, title down adn description. Separator and a selector for season left and episodes right -->
+<div class="flex flex-col lg:flex-row lg:justify-between mt-2 hidden" id="show-episodes-div">
+    <!-- Banner and Title/Description -->
+    <div class="w-full lg:w-1/3">
+        <div class="flex flex-col items-center">
+            <!-- Banner -->
+            <div class="flex justify-center items-center mt-4">
+                <img src="" id="show-banner" class="rounded-lg">
+            </div>
+            <!-- Title and Description -->
+            <div class="text-center mt-2">
+                <h1 class="text-2xl font-bold" id="show-title"></h1>
+                <p class="text-sm hint-text" id="show-description"></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Season and Episode Selector -->
+    <div class="w-full lg:w-2/3 mt-4 lg:mt-0">
+        <!-- Season Selector -->
+        <div class="flex justify-between items-center mb-2">
+            <select id="season-selector" class="py-2 px-4 rounded-md">
+                <!-- Season options will be appended here -->
+            </select>
+        </div>
+        <hr class="my-2">
+        <!-- Episode List -->
+        <div id="episode-list" class="grid grid-cols-2 gap-2 gap-y-4 gap">
+            <!-- Episode list items will be appended here -->
+
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
