@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  tageveryone_telegrambot:
-    image: matt0550/tageveryone_telegrambot
+  eurostreaming_telegrambot:
+    image: matt0550/eurostreaming_telegrambot_telegrambot
     environment:
       - token=TG_TOKEN
       - owner_id=TG_OWNER_ID
@@ -14,6 +14,4 @@ services:
       - PGID=1000     # GID of the user inside the container, make sure it has access to the database file
     ports:
       - 5040:5000
-    volumes:
-      - /volume1/docker/tg/:/home/src/db/input/
     restart: unless-stopped

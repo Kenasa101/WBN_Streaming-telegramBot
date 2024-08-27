@@ -137,7 +137,7 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uptime = str(uptime).split(".")[0]
 
     await update.message.reply_text("✅ If you see this message, the bot is working\n⏰ Uptime: %s" % str(
-        uptime) + "\n\nThanks for using this bot.\nBuy me a coffee: https://buymeacoffee.com/Matt0550\nSource code: https://github.com/Matt0550/TagEveryoneTelegramBot", disable_web_page_preview=True)
+        uptime) + "\n\nThanks for using this bot.\nBuy me a coffee: https://buymeacoffee.com/Matt0550\nSource code: https://github.com/Matt0550/Eurostreaming-telegramBot", disable_web_page_preview=True)
 
 def main() -> None:
     application = Application.builder().token(TOKEN).build()

@@ -3,11 +3,16 @@
 <div id="unauthorized"
     class="fixed top-0 left-0 z-50 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 hidden">
     <div class="border py-2 px-5 rounded-lg flex items-center">
-        <h1 class="text-red-500 font-bold text-xl">Unauthorized</h1>
+        <h1 class="destructive-color font-bold text-xl">Unauthorized</h1>
     </div>
 </div>
 
-
+<div id="error"
+    class="fixed top-0 left-0 z-50 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 hidden">
+    <div class="border py-2 px-5 rounded-lg flex items-center">
+        <h1 class="destructive-color font-bold text-xl">An error occurred. Please try again later</h1>
+    </div>
+</div>
 
 
 <!-- Show lists -->
@@ -17,14 +22,13 @@
         <div class="flex flex-col">
             <div class="flex flex-col justify-between items-center">
                 <h1 class="text-2xl font-bold">Shows</h1>
-                <p class="text-sm" style="color: var(--tg-theme-hint-color);">Select a show to view its episodes and links to watch</p>
+                <p class="text-sm hint-text">Select a show to view its episodes and links to watch</p>
             </div>
             
             <!-- search bar -->
 
             <div class="flex flex-col mt-4">
-                <input type="text" id="search" class="font-bold py-2 px-4 rounded-md" style="background-color: var(--tg-theme-secondary-bg-color); color: var(--tg-theme-text-color);"
-                    placeholder="Search for shows and episodes">
+                <input type="text" id="search" class="py-2 px-4 rounded-md" placeholder="Search for shows">
             </div>
         
                 <div id="shows-list" class="grid grid-cols-2 gap-2 gap-y-4 gap mt-4 mb-4">
@@ -35,7 +39,7 @@
             <div id="shows-pagination" class="flex justify-center items-center mt-4 gap-x-2">
                 <!-- Pagination items will be appended here -->
                  <!-- Next button and back -->
-                <button id="shows-prev" class="font-bold py-2 px-4 rounded-lg" style="background-color: var(--tg-theme-secondary-bg-color); color: var(--tg-theme-text-color);">
+                <button id="shows-prev" class="font-bold py-2 px-4 rounded-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,21 +47,22 @@
                     </svg>
 
                 </button>
-                <input type="text" id="shows-page" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded" value="1">
-                <button id="shows-next" class="font-bold py-2 px-4 rounded-lg" style="background-color: var(--tg-theme-secondary-bg-color); color: var(--tg-theme-text-color);">
+                <input type="number" id="shows-page" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded max-w-10"
+                    value="1">
+                <p class="hint-text">of</p>
+                <p id="shows-total-pages" class="hint-text">1</p>
+                <button id="shows-next" class="font-bold py-2 px-4 rounded-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-
-
             </div>
 
             <!-- Copyright notice -->
-            <div class="flex justify-center items-center mt-4">
-                <p class="text-sm" style="color: var(--tg-theme-hint-color);">The rights of the shows and movies are owned by their respective owners. This webapp is for educational purposes only.</p>
+            <div class="flex justify-center items-center my-4">
+                <p class="text-sm hint-text">The rights of the shows and movies are owned by their respective owners. This webapp is for educational purposes only.</p>
             </div>
         </div>
     </div>

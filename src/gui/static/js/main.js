@@ -3,32 +3,47 @@ function errorAlert(message) {
     window.Telegram.WebApp.HapticFeedback.notificationOccurred("error");
     window.Telegram.WebApp.showAlert("Error: " + message);
 }
-CURRENT_PAGE = 0;
-function loadShows(page = 1) {
-    $("#loader").show();
+let CURRENT_PAGE = 1;
+function loadShows() {
+    $("#loader").removeClass("hidden");
     // Empty the container
     $("#shows-list").empty();
 
-    fetch(EUROSTREAMING_API_BASE_URL + "/shows/" + page).then(function (response) {
+    fetch(EUROSTREAMING_API_BASE_URL + "/shows/" + CURRENT_PAGE).then(function (response) {
         return response.json();
     }).then(function (data) {
         if (data.status_code !== 200) {
             if (data.status_code === 401) {
-                $("#unauthorized").show();
+                $("#unauthorized").removeClass("hidden");
             }
-            console.log("Error", data.message);
-            errorAlert(data.message);
-
-            $("#loader").hide();
+            console.log("Error", error);
+            $("#loader").addClass("hidden");
+            $("#error").removeClass("hidden");
+            errorAlert(error.message);
 
             return;
         }
-
-        CURRENT_PAGE = page;
    
         const shows = data.details;
         const maxPages = shows.maxPages;
-        console.log(shows);
+
+        // Pagination
+        if (CURRENT_PAGE > 0) {
+            $("#shows-next").show();
+        } else {
+            $("#shows-prev").hide();
+        }
+
+        if (CURRENT_PAGE < maxPages - 1) {
+            $("#shows-prev").show();
+        }
+        console.log("maxPages", maxPages);
+        console.log("CURRENT_PAGE", CURRENT_PAGE);
+
+        $("#shows-page").val(CURRENT_PAGE);
+        $("#shows-total-pages").text(maxPages);
+
+
         // For every show create a card and append it to the containe
         shows.shows.forEach(show => {
             const card = `
@@ -41,38 +56,12 @@ function loadShows(page = 1) {
             $("#shows-list").append(card);
         });
 
-        // Pagination
-        if (CURRENT_PAGE > 0) {
-            $("#shows-next").show();
-        } else {
-            $("#shows-prev").hide();
-        }
-
-        if (CURRENT_PAGE < maxPages - 1) {
-            $("#shows-prev").show();
-        }
-
-        // Button click events
-        $("#shows-prev").click(function () {
-            $("#shows-list").empty();
-            loadShows(CURRENT_PAGE - 1);
-        });
-
-        $("#shows-next").click(function () {
-            $("#shows-list").empty();
-            loadShows(CURRENT_PAGE + 1);
-        });
-
-        $("#shows-pages").val(`${CURRENT_PAGE + 1}/${maxPages}`);
-
-        // Handle value change
-        $("#shows-pages").change(function () {
-            const value = $(this).val();
-            const page = parseInt(value.split("/")[0]);
-            loadShows(page - 1);
-        });
-
-        $("#loader").hide();
+        $("#loader").addClass("hidden");
+    }).catch(function (error) {
+        console.log("Error", error);
+        $("#loader").addClass("hidden");
+        $("#error").removeClass("hidden");
+        errorAlert(error.message);
 
     });
 }
@@ -82,6 +71,38 @@ $(document).ready(function () {
     loadShows();
 
     window.Telegram.WebApp.ready();
+
+    // Button click events
+    $("#shows-prev").click(function () {
+        $("#shows-list").empty();
+        CURRENT_PAGE--;
+        loadShows();
+    });
+
+    $("#shows-next").click(function () {
+        $("#shows-list").empty();
+        CURRENT_PAGE++;
+        loadShows();
+    });
+
+    // Handle value change of contenteditable element on enter
+    $("#shows-page").keypress(function (e) {
+        if (e.which === 13) {
+            const page = parseInt($("#shows-page").val());
+            if (page > 0) {
+                CURRENT_PAGE = page;
+                $("#shows-list").empty();
+                loadShows();
+            }
+        }
+    });
+
+    // close keyboard when touch outside
+    $(document).on("click", function (e) {
+        if (!$(e.target).closest("#shows-page").length) {
+            $("#shows-page").blur();
+        }
+    });
 
 });
 

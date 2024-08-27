@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG PYTHON_VERSION=3.9.2
+ARG PYTHON_VERSION=3.11.4
 FROM python:${PYTHON_VERSION}-slim as base
 
 ENV PYTHONDONTWRITEBYTECODE=1

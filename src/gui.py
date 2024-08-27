@@ -140,7 +140,7 @@ def mainGUI():
         print("Error: Invalid port number provided. Check your environment variables.")
         sys.exit(1)
 
-    app.run(host=HOST, port=PORT, debug=WEBSERVER_DEBUG)
+    app.run(host=HOST, port=PORT, debug=True)
 
 if __name__ == '__main__':
     print("Eurostreaming Unofficial Telegram Bot Web Interface")

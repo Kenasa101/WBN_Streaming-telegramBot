@@ -1,0 +1,56 @@
+body {
+    background-color: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+}
+
+::placeholder {
+    color: var(--tg-theme-hint-color);
+}
+
+input, textarea, select {
+    background-color: var(--tg-theme-secondary-bg-color);
+    color: var(--tg-theme-secondary-text-color);
+}
+
+button {
+    background-color: var(--tg-theme-secondary-bg-color);
+    color: var(--tg-theme-secondary-text-color);
+}
+
+.hint-text {
+    color: var(--tg-theme-hint-color);
+}
+
+.destructive-color {
+    color: var(--tg-theme-destructive-text-color);
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 15px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+}
+
+@keyframes l5 {
+    0% {
+        box-shadow: 20px 0 var(--tg-theme-text-color), -20px 0 var(--tg-theme-hint-color);
+        background: var(--tg-theme-text-color);
+    }
+
+    33% {
+        box-shadow: 20px 0 var(--tg-theme-text-color), -20px 0 var(--tg-theme-hint-color);
+        background: var(--tg-theme-hint-color);
+    }
+
+    66% {
+        box-shadow: 20px 0 var(--tg-theme-hint-color), -20px 0 var(--tg-theme-text-color);
+        background: var(--tg-theme-hint-color);
+    }
+
+    100% {
+        box-shadow: 20px 0 var(--tg-theme-hint-color), -20px 0 var(--tg-theme-text-color);
+        background: var(--tg-theme-text-color);
+    }
+}
