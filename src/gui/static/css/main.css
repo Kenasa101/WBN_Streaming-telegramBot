@@ -29,6 +29,26 @@ hr {
     color: var(--tg-theme-destructive-text-color);
 }
 
+.bg-secondary-color {
+    background-color: var(--tg-theme-secondary-bg-color);
+}
+
+.bg-main-color {
+    background-color: var(--tg-theme-bg-color);
+}
+
+.text-color {
+    color: var(--tg-theme-text-color);
+}
+
+.bg-button-color {
+    background-color: var(--tg-theme-button-color);
+}
+
+.button-color {
+    color: var(--tg-theme-button-text-color);
+}
+
 /* HTML: <div class="loader"></div> */
 .loader {
     width: 15px;
