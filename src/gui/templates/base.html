@@ -9,6 +9,10 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
+    <script>
+        // Very bad practice :(
+        const EUROSTREAMING_API_BASE_URL = "{{ scraping_api_url }}";
+    </script>
 </head>
 
 <body class="h-full font-sans leading-normal tracking-normal">

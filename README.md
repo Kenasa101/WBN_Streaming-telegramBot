@@ -8,93 +8,121 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Matt0550/EurostreamingAPI-scraping">
-    <img src="logo.png" alt="Logo" height="40">
+  <a href="https://github.com/Matt0550/Eurostreaming-telegramBot">
+    <img src="https://raw.githubusercontent.com/Matt0550/public-gaac/main/uploads/eurostreaming_logo_telegram_bot.png" alt="Logo" height="40">
   </a>
 
   <h3 align="center">Eurostreaming Unofficial Telegram BOT & Mini App</h3>
 
   <p align="center">
-    An unofficial Telegram BOT and Mini App for Eurostreaming website, with a WebApp to search for movies and series.
+    An unofficial Telegram BOT and Mini App for Eurostreaming website.
     <br />
     <br />
-    <a href="https://github.com/Matt0550/EurostreamingAPI-scraping/issues">Report Bug</a>
+    <a href="https://github.com/Matt0550/Eurostreaming-telegramBot/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Matt0550/EurostreamingAPI-scraping/issues">Request Feature</a>
+    <a href="https://github.com/Matt0550/Eurostreaming-telegramBot/issues">Request Feature</a>
   </p>
 </div>
 
-All the data is scraped from the Eurostreaming website. This project is for educational purposes only. I do not condone piracy in any way. Please use this project responsibly. 
+All the data is scraped from the Eurostreaming website using my [own API](https://github.com/Matt0550/EurostreamingAPI-scraping) and is not affiliated with Eurostreaming in any way. This project is for educational purposes only. I do not condone piracy in any way. Please use this project responsibly.
 
 Copyright and all rights belong to the respective owners.
 
+## Bot Features (only with WebApp)
 
-# EurostreamingAPI-scraping
+- View the latest TV shows
+- Search for TV shows
+- Get the details of a TV show
+- Get the streaming links of a TV show episode
 
-An unofficial REST API for Eurostreaming website, with a WebApp to search for movies and series. Using FastAPI and BeautifulSoup.
 
-## Features
+## Mini App Demo
 
-- Get all series per page
-- Search for series
-- Get the list of seasons and episodes of a series and related links to watch them
-
-## API Endpoints
-
-- `/shows/{page}`: Get all series per page. Page is an integer and is required.
-- `/search?q={query}&page={page}`: Search for series. Query is a string and is required. Page is an integer and is optional.
-- `/show?path={show_path}&alsoEpisodes={alsoEpisodes}`: Get the list of seasons and episodes of a series and related links to watch them. Show_path is a string and is required. AlsoEpisodes is a boolean and is optional, default is true.
-
-> [!TIP]
-> The API is self-documented. You can access the Swagger UI at `/docs` and the ReDoc UI at `/redoc`.
-
-## WebApp
-> [!WARNING]
-> SOON
+https://github.com/user-attachments/assets/38c202f8-6bcc-4983-8847-cf5aaf0d9d2a
 
 ## TO-DO
-- [ ] Add Dockerfile
-- [ ] Add Docker Compose
-- [ ] Add WebApp
-- [ ] Add show categories
+- [ ] Notifications for new episodes
+- [ ] Categories
+- [ ] Docker support
 
 
-## Public instance of the API
-Unfortunately, I can't provide a public instance of the API because scraping is not a good practice and it's illegal in some cases. You can host your own instance of the API using the instructions below.
+## Public instance of the Bot
+At the moment, I can't provide a public instance of the bot because scraping is not a good practice and it's not allowed by the Eurostreaming website. I don't want to get in trouble with them, so I can't provide a public instance of the bot. Sorry for the inconvenience.
 
 ## Environment Variables
-> [!WARNING]
-> SOON
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `token` | The Telegram Bot token | `None` |
+| `owner_id` | The Telegram ID of the owner | `None` |
+| `enable_webapp_server` | Enable the webapp server | `False` |
+| `webserver_debug` | Enable the debug mode for the webapp server | `False` |
+| `webapp_host` | The host of the mini app server | `0.0.0.0 or localhost (win)` |
+| `webapp_port` | The port of the mini app server | `5000` |
+| `report_errors_owner` | Report errors to the owner | `False` |
+| `secret_key` | The secret key for the webapp server | `abc123` |
+| `scraping_api_url` | The URL of the scraping API | `http://localhost:8000` |
+| `PUID` | Docker PUID | `1000` |
+| `PGID` | Docker PGID | `1000` |
 
 ## Installation - Using Docker Compose (recommended)
-> [!WARNING]
-> SOON
+```yaml
+version: '3'
+
+services:
+  eurostreaming_telegrambot:
+    image: matt0550/eurostreaming_telegrambot
+    environment:
+      - token=TG_TOKEN
+      - owner_id=TG_OWNER_ID
+      - enable_webapp_server=True # For the telegram webapp.
+      - webserver_debug=False
+      - report_errors_owner=True # Report errors to the owner.
+      - secret_key=abc123    # Random string
+      - scraping_api_url=http://localhost:8000
+      - PUID=1000     # UID of the user inside the container
+      - PGID=1000     # GID of the user inside the container
+    ports:
+      - 7015:5000
+    restart: unless-stopped
+```
 
 Run the container with `docker-compose up -d`
 
 ## Installation - Using Docker Run
-> [!WARNING]
-> SOON
-
+```bash
+docker run -d \
+  --name=eurostreaming_telegrambot \
+  -e token=TG_TOKEN \
+  -e owner_id=TG_OWNER_ID \
+  -e enable_webapp_server=True \
+  -e webserver_debug=False \
+  -e report_errors_owner=True \
+  -e secret_key=abc123
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -p 7015:5000 \
+  --restart unless-stopped \
+  matt0550/eurostreaming_telegrambot
+```
 
 ## Installation - Self-Host or docker build
 
 Clone the project
 
 ```bash
-  git clone https://github.com/Matt0550/EurostreamingAPI-scraping
+  git clone https://github.com/Matt0550/Eurostreaming-telegramBot
 ```
 
 Go to the project directory
 
 ```bash
-  cd EurostreamingAPI-scraping-master
+  cd Eurostreaming-telegramBot-master
 ```
 
 OPTIONAL: use docker to build the image
 
 ```bash
-  docker build -t eurostreamingAPI-scraping .
+  docker build -t Eurostreaming-telegramBot .
 ```
 If you don't want to use docker, skip this step.
 Else, change the `image` in `docker-compose.yml` with the image name you used.
@@ -110,21 +138,21 @@ Start the REST API (after setting the environment variables)
 
 ```bash
   cd api
-  fastapi run api.py
+  python main.py
 ```
 
 ## Help - feedback
 You can contact me on:
 
-Discord: https://discord.gg/5WrVyQKWAr
+Discord: https://go.matteosillitti.it/discord
 
-Telegram: https://t.me/Non_Sono_matteo
+Telegram: https://go.matteosillitti.it/telegram
 
 Mail: <a href="mailto:mail@matteosillitti.it">me@matteosillitti.it</a>
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
 
 ## Support me
 
@@ -134,17 +162,17 @@ Mail: <a href="mailto:mail@matteosillitti.it">me@matteosillitti.it</a>
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/sillittimatteo)
 
-[contributors-shield]: https://img.shields.io/github/contributors/Matt0550/EurostreamingAPI-scraping.svg?style=for-the-badge
-[contributors-url]: https://github.com/Matt0550/EurostreamingAPI-scraping/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Matt0550/EurostreamingAPI-scraping.svg?style=for-the-badge
-[forks-url]: https://github.com/Matt0550/EurostreamingAPI-scraping/network/members
-[stars-shield]: https://img.shields.io/github/stars/Matt0550/EurostreamingAPI-scraping.svg?style=for-the-badge
-[stars-url]: https://github.com/Matt0550/EurostreamingAPI-scraping/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Matt0550/EurostreamingAPI-scraping.svg?style=for-the-badge
-[issues-url]: https://github.com/Matt0550/EurostreamingAPI-scraping/issues
-[license-shield]: https://img.shields.io/github/license/Matt0550/EurostreamingAPI-scraping.svg?style=for-the-badge
-[license-url]: https://github.com/Matt0550/EurostreamingAPI-scraping/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/Matt0550/Eurostreaming-telegramBot.svg?style=for-the-badge
+[contributors-url]: https://github.com/Matt0550/Eurostreaming-telegramBot/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Matt0550/Eurostreaming-telegramBot.svg?style=for-the-badge
+[forks-url]: https://github.com/Matt0550/Eurostreaming-telegramBot/network/members
+[stars-shield]: https://img.shields.io/github/stars/Matt0550/Eurostreaming-telegramBot.svg?style=for-the-badge
+[stars-url]: https://github.com/Matt0550/Eurostreaming-telegramBot/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Matt0550/Eurostreaming-telegramBot.svg?style=for-the-badge
+[issues-url]: https://github.com/Matt0550/Eurostreaming-telegramBot/issues
+[license-shield]: https://img.shields.io/github/license/Matt0550/Eurostreaming-telegramBot.svg?style=for-the-badge
+[license-url]: https://github.com/Matt0550/Eurostreaming-telegramBot/blob/master/LICENSE
 [discord-shield]: https://img.shields.io/discord/828990499507404820?style=for-the-badge
-[discord-url]: https://discord.gg/5WrVyQKWAr
-[docker-shield]: https://img.shields.io/docker/pulls/matt0550/panini-progno?style=for-the-badge
-[docker-url]: https://hub.docker.com/r/matt0550/panini-progno
+[discord-url]: https://go.matteosillitti.it/discord
+[docker-shield]: https://img.shields.io/docker/pulls/matt0550/eurostreaming_telegrambot?style=for-the-badge
+[docker-url]: https://hub.docker.com/r/matt0550/eurostreaming_telegrambot

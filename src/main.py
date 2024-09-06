@@ -5,6 +5,7 @@
 #       Github: @Matt0550       #
 #################################
 
+import sys
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, Chat, Bot, WebAppInfo
 from telegram.constants import ParseMode
 from telegram.ext import Application, Updater, ContextTypes, MessageHandler, filters, CommandHandler
@@ -25,15 +26,22 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 
-
 # Load .env file
 dotenv.load_dotenv()
 
-TOKEN = os.environ['token']
-OWNER_ID = os.environ['owner_id']
+TOKEN = os.getenv('token')
+if not TOKEN:
+    print("Error: No token provided. Check your environment variables.")
+    sys.exit(1)
+    
+OWNER_ID = os.getenv('owner_id')
 
-ENABLE_WEBAPP_SERVER = os.environ['enable_webapp_server'] # Required for miniapp
-REPORT_ERRORS_OWNER = os.environ['report_errors_owner']
+if not OWNER_ID:
+    print("Error: No owner id provided. Check your environment variables.")
+    sys.exit(1)
+
+ENABLE_WEBAPP_SERVER = os.getenv('enable_webapp_server', True) # Required for miniapp
+REPORT_ERRORS_OWNER = os.getenv('report_errors_owner', True) # Report errors to the owner
 
 start_time = datetime.datetime.now()  # For the uptime command
 
@@ -103,7 +111,6 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
         chat_id=OWNER_ID, text=message, parse_mode=ParseMode.HTML
     )
 
-
 @cooldown(15)
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if bot is in a group
@@ -114,21 +121,24 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(
             "This command cannot be used in a group")
 
-
 @cooldown(15)
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("""
     Eurostreaming Unofficial Telegram Bot\n
 Commands:
-
+- /start: Start the bot
+- /help: Show this message
+- /status: Show the bot status\n\n
+This bot is an unofficial bot for Eurostreaming website.\n
+You can open the mini app with the /start command.\n
 This project is open source and free to use.
+                                    
 Developed by @Non_Sono_Matteo
 https://matteosillitti.it
                                     
-Source code: https://github.com/Matt0550/
+Source code: https://github.com/Matt0550/Eurostreaming-telegramBot
 Buy me a coffee: https://buymeacoffee.com/Matt0550
 """)
-
 
 @cooldown(15)
 async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):

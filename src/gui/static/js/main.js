@@ -1,6 +1,3 @@
-const EUROSTREAMING_API_BASE_URL =
-    "https://eurostreaming-api.cloud.matteosillitti.it";
-
 function errorAlert(message) {
     window.Telegram.WebApp.HapticFeedback.notificationOccurred("error");
     window.Telegram.WebApp.showAlert("Error: " + message);
@@ -65,13 +62,20 @@ function loadShows(search = "") {
             shows.shows.forEach((show) => {
                 const card = `
                 <div class="flex flex-col items-center show-card" data-path="${show.path}">
-                    <img src="${show.image}" alt="${show.title}"
-                        class="w-32 h-48 object-cover rounded-lg">
+                    <div class="relative w-32 h-48">
+                        <!-- Skeleton loader -->
+                        <div class="absolute inset-0 bg-gray-300 animate-pulse rounded-lg skeleton"></div>
+                        <!-- Immagine -->
+                        <img src="${show.image}" alt="${show.title}" loading="lazy"
+                            class="w-32 h-48 object-cover rounded-lg opacity-0 transition-opacity duration-500"
+                            onload="this.classList.remove('opacity-0'); this.previousElementSibling.remove();">
+                    </div>
                     <p class="text-center text-sm mt-2">${show.title}</p>
-                 </div>
-            `;
+                </div>
+                `;
                 $("#shows-list").append(card);
             });
+            
 
             $("#loader").addClass("hidden");
         })
@@ -151,7 +155,6 @@ function openShow(path) {
 
             // Go up to the top of the page
             window.scrollTo(0, 0);
-
 
             $("#show-title").text(show.title);
             $("#show-description").text(show.description);

@@ -10,7 +10,6 @@
 # telegram mini app and in the future you can authenticate the user and 
 # perform server-side actions
 
-import datetime
 import sys
 import flask
 import os
@@ -23,11 +22,11 @@ from urllib.parse import unquote
 
 load_dotenv()
 
-OWNER_ID = os.getenv('owner_id', None)
-GUI_PASSWORD = os.getenv('gui_password', None)
-SECRET_KEY = os.getenv('secret_key', None)
+SECRET_KEY = os.getenv('secret_key', "abc123")
 TOKEN = os.getenv('token', None)
 WEBSERVER_DEBUG = os.getenv('webserver_debug', False)
+SCRAPING_API_URL = os.getenv('scraping_api_url', None)
+
 if WEBSERVER_DEBUG == "True" or WEBSERVER_DEBUG == "true" or WEBSERVER_DEBUG == "1":
     WEBSERVER_DEBUG = True
 else:
@@ -37,13 +36,20 @@ if not SECRET_KEY:
     print("Error: No secret key provided. Check your environment variables.")
     sys.exit(1)
 
+if not TOKEN:
+    print("Error: No token provided. Check your environment variables.")
+    sys.exit(1)
+
+if not SCRAPING_API_URL:
+    print("Error: No API URL provided. Check your environment variables.")
+    sys.exit(1)
 
 if os.name == 'nt':
-    HOST = os.getenv('APP_HOST', "localhost")
+    HOST = os.getenv('webapp_host', "localhost")
 else:
-    HOST = os.environ.get('APP_HOST', "0.0.0.0")
+    HOST = os.environ.get('webapp_host', "0.0.0.0")
 
-PORT = os.getenv('APP_PORT', 5000)
+PORT = os.getenv('webapp_port', 5000)
 
 app = flask.Flask(__name__, template_folder='./gui/templates', static_folder='./gui/static')
 app.secret_key = SECRET_KEY
@@ -128,11 +134,12 @@ def internal_server_error(e):
 
 @app.route('/')
 def dashboard():
-    return flask.render_template('./dashboard/index.html')
+    return flask.render_template('./dashboard/index.html', scraping_api_url=SCRAPING_API_URL)
 
 @app.route('/status')
 def status():
     return flask.jsonify({'status': 200, 'message': 'OK'})
+
 def mainGUI():
     try:
         port = int(PORT)  # Convert PORT to an integer
@@ -140,7 +147,7 @@ def mainGUI():
         print("Error: Invalid port number provided. Check your environment variables.")
         sys.exit(1)
 
-    app.run(host=HOST, port=PORT, debug=True)
+    app.run(host=HOST, port=PORT, debug=WEBSERVER_DEBUG)
 
 if __name__ == '__main__':
     print("Eurostreaming Unofficial Telegram Bot Web Interface")

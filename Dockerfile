@@ -24,19 +24,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 COPY . .
 
-# Converti init.sh in stile Unix
 RUN dos2unix /home/scripts/init.sh
 
-# Debug: Verifica la struttura delle directory nel container
-RUN ls -R /home
-
-# Modifica i permessi del file direttamente
 RUN chmod +x /home/scripts/init.sh
 
-# Debug: Verifica i permessi del file init.sh
-RUN ls -l /home/scripts/init.sh
-
-# Cambia i permessi di tutta la directory di lavoro
 RUN chown -R ${APP_USER}:${APP_USER} /home
 
 EXPOSE 5000

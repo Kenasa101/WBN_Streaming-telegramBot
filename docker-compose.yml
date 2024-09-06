@@ -2,7 +2,7 @@ version: '3'
 
 services:
   eurostreaming_telegrambot:
-    image: matt0550/eurostreaming_telegrambot_telegrambot
+    image: matt0550/eurostreaming_telegrambot
     environment:
       - token=TG_TOKEN
       - owner_id=TG_OWNER_ID
@@ -10,8 +10,8 @@ services:
       - webserver_debug=False
       - report_errors_owner=True # Report errors to the owner.
       - secret_key=SECRET_KEY    # Random string
-      - PUID=1000     # UID of the user inside the container, make sure it has access to the database file
-      - PGID=1000     # GID of the user inside the container, make sure it has access to the database file
+      - PUID=1000     # UID of the user inside the container
+      - PGID=1000     # GID of the user inside the container
     ports:
       - 5040:5000
     restart: unless-stopped
