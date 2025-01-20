@@ -2,10 +2,10 @@ version: '3'
 
 services:
   eurostreaming_telegrambot:
-    image: matt0550/eurostreaming_telegrambot
+    image: matt0550/eurostreaming
     environment:
-      - token=TG_TOKEN
-      - owner_id=TG_OWNER_ID
+      - token=7217849898:AAHRoxZLxdBVxcxXGhSYnUyPtsqxp5cxhWg
+      - owner_id=330378473
       - enable_webapp_server=True # For the telegram webapp.
       - webserver_debug=False
       - report_errors_owner=True # Report errors to the owner.
